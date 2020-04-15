@@ -31,7 +31,7 @@ CREATE TEMP FUNCTION udf_merged_user_data(old_aggs ANY TYPE, new_aggs ANY TYPE)
         key,
         process,
         agg_type,
-        udf.map_sum(ARRAY_CONCAT_AGG(aggregates)) AS histogram_aggregates
+        `moz-fx-data-shared-prod.udf.map_sum`(ARRAY_CONCAT_AGG(aggregates)) AS histogram_aggregates
       FROM unnested
       GROUP BY
         first_bucket,
