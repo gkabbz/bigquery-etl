@@ -11823,16 +11823,6 @@
                                         "mode": "NULLABLE",
                                         "name": "zoomed_view_enabled",
                                         "type": "STRING"
-                                    },
-                                    {
-                                        "mode": "NULLABLE",
-                                        "name": "http_saw_quic_alt_protocol_2",
-                                        "type": "STRING"
-                                    },
-                                    {
-                                        "mode": "NULLABLE",
-                                        "name": "transaction_wait_time_http3",
-                                        "type": "STRING"
                                     }
                                 ],
                                 "mode": "NULLABLE",
@@ -24129,21 +24119,6 @@
                     {
                         "mode": "NULLABLE",
                         "name": "zoomed_view_enabled",
-                        "type": "STRING"
-                    },
-                    {
-                        "mode": "NULLABLE",
-                        "name": "cookie_samesite_set_vs_unset",
-                        "type": "STRING"
-                    },
-                    {
-                        "mode": "NULLABLE",
-                        "name": "http_saw_quic_alt_protocol_2",
-                        "type": "STRING"
-                    },
-                    {
-                        "mode": "NULLABLE",
-                        "name": "transaction_wait_time_http3",
                         "type": "STRING"
                     }
                 ],

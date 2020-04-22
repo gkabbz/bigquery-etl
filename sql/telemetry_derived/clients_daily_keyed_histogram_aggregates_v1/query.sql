@@ -78,7 +78,13 @@ CREATE TEMP FUNCTION udf_aggregate_json_sum(histograms ARRAY<STRING>) AS (
   )
 );
 
-WITH filtered AS (
+WITH valid_build_ids AS (
+  SELECT
+    DISTINCT(build.build.id) AS build_id
+  FROM
+    `moz-fx-data-shared-prod.telemetry.buildhub2`
+),
+filtered AS (
   SELECT
     *,
     SPLIT(application.version, '.')[OFFSET(0)] AS app_version,
@@ -88,6 +94,10 @@ WITH filtered AS (
     normalized_channel AS channel
   FROM
     `moz-fx-data-shared-prod.telemetry_stable.main_v4`
+  INNER JOIN
+    valid_build_ids
+  ON
+    (application.build_id = build_id)
   WHERE
     DATE(submission_timestamp) = @submission_date
     AND normalized_channel IN ("release", "beta", "nightly")
@@ -101,11 +111,7 @@ sampled_data AS (
   WHERE
     channel IN ("nightly", "beta")
     OR (channel = "release" AND os != "Windows")
-    OR (
-      channel = "release" AND
-      os = "Windows" AND
-      MOD(sample_id, @sample_size) = 0
-    )
+    OR (channel = "release" AND os = "Windows" AND MOD(sample_id, @sample_size) = 0)
 ),
 grouped_metrics AS (
   SELECT
@@ -912,6 +918,12 @@ grouped_metrics AS (
         'parent',
         payload.keyed_histograms.http_traffic_analysis_3,
         (1, 50, 51)
+      ),
+      (
+        'https_only_mode_upgrade_time_ms',
+        'parent',
+        payload.keyed_histograms.https_only_mode_upgrade_time_ms,
+        (50, 300000, 30)
       ),
       (
         'idle_runnable_budget_overuse_ms',
