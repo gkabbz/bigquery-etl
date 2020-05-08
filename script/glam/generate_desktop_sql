@@ -1,0 +1,34 @@
+#!/bin/bash
+
+function generate_sql {
+    local probe_type=$1
+    local script_type
+    local query_name
+    local destination_table
+
+    echo "generating sql for ${probe_type}"
+
+    case $probe_type in
+        histogram | keyed_histogram)
+            script_type="histogram"
+            ;;
+        scalar | keyed_scalar | keyed_boolean)
+            script_type="scalar"
+            ;;
+        *)
+            echo "probe probe_type must be one of { histogram | keyed_histogram | scalar | keyed_scalar | keyed_boolean }"
+            exit 1
+            ;;
+    esac
+
+    python3 "sql/telemetry_derived/clients_daily_${script_type}_aggregates_v1.sql.py" \
+        "--agg-type=${probe_type}s" \
+        > "sql/telemetry_derived/clients_daily_${probe_type}_aggregates_v1/query.sql"
+
+    echo "generated sql/telemetry_derived/clients_daily_${probe_type}_aggregates_v1/query.sql"
+}
+
+probe_types=${PROBE_TYPE:-"scalar" "keyed_boolean" "keyed_scalar" "histogram" "keyed_histogram"}
+for probe_type in ${probe_types[@]}; do
+    generate_sql $probe_type
+done
