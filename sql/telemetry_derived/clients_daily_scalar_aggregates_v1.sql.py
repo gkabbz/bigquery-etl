@@ -102,7 +102,7 @@ def generate_sql(
                 channel
                 {additional_partitions})
 
-        {select_clause}
+            {select_clause}
         """
     )
 

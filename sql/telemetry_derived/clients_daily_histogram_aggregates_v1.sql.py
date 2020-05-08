@@ -109,9 +109,7 @@ def generate_sql(opts, additional_queries, windowed_clause, select_clause, json_
                 AND normalized_channel in (
                   "release", "beta", "nightly"
                 )
-                AND client_id IS NOT NULL
-                AND sample_id BETWEEN @min_sample_id AND @max_sample_id
-        ),
+                AND client_id IS NOT NULL),
 
         sampled_data AS (
           SELECT
