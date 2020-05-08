@@ -151,7 +151,7 @@ function run_desktop_sql {
     if ((start_stage <= 2)); then
         run_init "clients_daily_histogram_aggregates_v1"
         run_query "clients_daily_histogram_aggregates_v1" \
-            true 0 0 "clients_daily_keyed_histogram_aggregates_v1" \
+            true 0 0 "clients_daily_histogram_aggregates_v1" \
             "--replace --clustering_fields=app_version,channel --time_partitioning_field=submission_date"
         run_query "clients_daily_histogram_aggregates_v1" \
             true 0 0 "clients_daily_keyed_histogram_aggregates_v1" \
