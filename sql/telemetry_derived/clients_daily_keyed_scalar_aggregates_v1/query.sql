@@ -225,7 +225,6 @@ grouped_metrics AS (
         'parent',
         payload.processes.parent.keyed_scalars.preferences_use_current_page
       ),
-      ('printing_error', 'parent', payload.processes.parent.keyed_scalars.printing_error),
       (
         'qm_origin_directory_unexpected_filename',
         'parent',

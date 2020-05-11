@@ -920,12 +920,6 @@ grouped_metrics AS (
         (1, 50, 51)
       ),
       (
-        'https_only_mode_upgrade_time_ms',
-        'parent',
-        payload.keyed_histograms.https_only_mode_upgrade_time_ms,
-        (50, 300000, 30)
-      ),
-      (
         'idle_runnable_budget_overuse_ms',
         'content',
         payload.processes.content.keyed_histograms.idle_runnable_budget_overuse_ms,
